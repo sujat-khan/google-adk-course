@@ -1,8 +1,8 @@
 import asyncio
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-load_dotenv("session_agent/.env")  # adk web does this for you; a script must do it itself
+load_dotenv(find_dotenv())  # automatically finds .env in current or parent directory
 
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
@@ -11,7 +11,7 @@ from google.genai import types
 from session_agent.agent import root_agent  # <- your existing agent
 
 APP_NAME = "session_agent"
-USER_ID = "nitish"
+USER_ID = "Sujat"
 
 # ---------------------------------------------------------------
 # 1. SessionService: where sessions are stored
@@ -60,7 +60,10 @@ def ask(session_id: str, text: str):
                             new_message=message
                         ):
         if event.is_final_response():
-            print(f"Agent: {event.content.parts[0].text}\n")
+            if event.content and event.content.parts:
+                print(f"Agent: {event.content.parts[0].text}\n")
+            elif event.error_message:
+                print(f"Error: {event.error_message}\n")
 
 
 # ---------------------------------------------------------------
@@ -68,7 +71,7 @@ def ask(session_id: str, text: str):
 # ---------------------------------------------------------------
 print("=== Conversation 1 ===")
 chat_1 = create_session()
-ask(chat_1.id, "Hi, my name is Nitish")
+ask(chat_1.id, "Hi, my name is Sujat")
 ask(chat_1.id, "What is my name?")        # same session -> remembers
 
 print("=== Conversation 2 ===")

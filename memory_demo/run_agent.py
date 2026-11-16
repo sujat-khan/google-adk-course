@@ -1,13 +1,13 @@
 import asyncio
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 from google.adk.memory import InMemoryMemoryService
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.adk.memory import SqliteMemoryService
 from google.genai import types
 
-load_dotenv("memory_agent/.env")
+load_dotenv(find_dotenv())
 
 from memory_agent.agent import root_agent
 

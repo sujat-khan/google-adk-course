@@ -2,13 +2,13 @@ import asyncio
 import os
 
 import agentplatform
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 from google.adk.memory import VertexAiMemoryBankService
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
 
-load_dotenv("memory_agent/.env")
+load_dotenv(find_dotenv())
 
 from memory_agent.agent import root_agent
 

@@ -2,7 +2,7 @@ import streamlit as st
 
 import chat_service
 
-USER_ID = "nitish"  # a single, hardcoded user
+USER_ID = "Sujat"  # a single, hardcoded user
 
 st.set_page_config(page_title="CampusX Assistant", page_icon="🎓")
 
@@ -14,7 +14,7 @@ if "session_id" not in st.session_state:
 
 # ---------- Sidebar: list of sessions ----------
 with st.sidebar:
-    st.title("🎓 CampusX Assistant")
+    st.title("🎓 SK Assistant")
     st.caption(f"Logged in as: {USER_ID}")
 
     if st.button("➕ New chat", width="stretch"):

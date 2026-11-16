@@ -1,8 +1,9 @@
 import asyncio
+from pathlib import Path
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-load_dotenv("chatbot_agent/.env")  # adk web does this for you; here we do it ourselves
+load_dotenv(find_dotenv())  # Automatically finds .env in current or parent directory
 
 from google.adk.runners import Runner
 from google.adk.sessions import DatabaseSessionService
@@ -13,7 +14,8 @@ from chatbot_agent.agent import root_agent
 APP_NAME = "chatbot_agent"
 
 # 1. SessionService: where sessions are stored
-session_service = DatabaseSessionService(db_url="sqlite+aiosqlite:///./sessions.db")
+DB_PATH = Path(__file__).resolve().parent / "sessions.db"
+session_service = DatabaseSessionService(db_url=f"sqlite+aiosqlite:///{DB_PATH.as_posix()}")
 
 # 2. Runner: connects the agent to the session service
 runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
@@ -39,6 +41,8 @@ def get_messages(user_id: str, session_id: str) -> list[dict]:
     session = asyncio.run(
         session_service.get_session(app_name=APP_NAME, user_id=user_id, session_id=session_id)
     )
+    if not session:
+        return []
     messages = []
     for event in session.events:  # a session's history is a list of events
         text = _event_text(event)

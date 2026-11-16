@@ -1,8 +1,8 @@
 import asyncio
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-load_dotenv("state_agent/.env")  # adk web does this for you; a script must do it itself
+load_dotenv(find_dotenv())  # Automatically finds .env in current or parent directory
 
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService

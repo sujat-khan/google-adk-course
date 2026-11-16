@@ -2,9 +2,9 @@
 import os
 
 import agentplatform
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-load_dotenv("memory_agent/.env")
+load_dotenv(find_dotenv())
 
 client = agentplatform.Client(
     project=os.environ["GOOGLE_CLOUD_PROJECT"],
